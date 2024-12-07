@@ -9,7 +9,7 @@ namespace SmartPlannerWebApi.Controllers
         [HttpGet("GetHello")] // https://localhost:7210/api/goals/gethello
         public async Task<string> GetHello()
         {
-            return "Hello Goals";
+            return $"Hello Goals {Guid.NewGuid()}";
         }
     }
 }
