@@ -7,6 +7,21 @@ namespace SmartPlannerWebApi.StaticDataForTesting
     public class MemoryNotesStorage : INotesStorage
     {
         public List<Note> Notes { get; set; } = new List<Note>();
+        public MemoryNotesStorage()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Notes.Add(new Note
+                {
+                    Id = Guid.NewGuid(),
+                    Title = $"Title N{i}",
+                    Description = $"Description N{i}",
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now,
+                    UserId = Guid.Parse("22c98a74-2913-4284-8b9c-b3e528838ba1")
+                });
+            } 
+        }
 
         public async Task<bool> AddNoteAsync(Note note)
         {

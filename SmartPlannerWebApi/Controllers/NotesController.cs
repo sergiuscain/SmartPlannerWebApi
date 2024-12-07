@@ -22,7 +22,7 @@ namespace SmartPlannerWebApi.Controllers
         {
             var res = _storage.AddNoteAsync(note);
             if (res.Result)
-                return Ok();
+                return Created();
             return Conflict();
         }
         [HttpGet("GetById")] //https://localhost:7210/api/notes/GetById?id=123
