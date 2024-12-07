@@ -8,6 +8,6 @@ namespace SmartPlannerWebApi.DataBase
         Task AddNoteAsync(Note note);
         Task DeleteNoteAsync(Guid noteId);
         Task<Note> GetNoteByUserIdAsync(Guid userId);
-        Task EditNoteAsync(Guid Id,Note newNote);
+        Task UpdateNoteAsync(Guid Id,Note newNote);
     }
 }

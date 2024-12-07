@@ -17,7 +17,7 @@ namespace SmartPlannerWebApi.StaticDataForTesting
             Notes.RemoveAll(n => n.Id == noteId);
         }
 
-        public async Task EditNoteAsync(Guid id, Note newNote)
+        public async Task UpdateNoteAsync(Guid id, Note newNote)
         {
             var lastNote = Notes.FirstOrDefault(n => n.Id == id);
             if (lastNote != null)
