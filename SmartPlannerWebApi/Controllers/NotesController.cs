@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using SmartPlannerWebApi.DataBase;
 using SmartPlannerWebApi.Models;
 using SmartPlannerWebApi.StaticDataForTesting;
@@ -17,29 +18,37 @@ namespace SmartPlannerWebApi.Controllers
         }
 
         [HttpPost("Create")] //https://localhost:7210/api/notes/Create
-        public async Task<string> Create(Note note)
+        public async Task<IActionResult> Create(Note note)
         {
-            _storage.AddNoteAsync(note);
-            return $"Note created with description: {note.Description}";
+            var res = _storage.AddNoteAsync(note);
+            if (res.Result)
+                return Ok();
+            return Conflict();
         }
         [HttpGet("GetById")] //https://localhost:7210/api/notes/GetById?id=123
-        public async Task<List<Note>> GetById(Guid id)
+        public async  Task<ActionResult<List<Note>>> GetById(Guid id)
         {
-            return await _storage.GetNotesByUserIdAsync(id);
+            var notes =  _storage.GetNotesByUserIdAsync(id).Result;
+            if (notes == null)
+                return NotFound("Такого пользователя не существует!");
+            return Ok(notes);
+
         }
 
         [HttpPut("Update")] //https://localhost:7210/api/notes/Update
-        public async Task<string> Update(Guid id, Note updatedNote)
+        public async Task<ActionResult<string>> Update(Guid id, Note updatedNote)
         {
             _storage.UpdateNoteAsync(id, updatedNote);
-            return $"Note with id {id} updated successfully";
+            return  Ok();
         }
 
         [HttpDelete("Delete")] //https://localhost:7210/api/notes/Delete
-        public async Task<string> Delete(Guid id)
+        public async Task<ActionResult<string>> Delete(Guid id)
         {
-            _storage.DeleteNoteAsync(id);
-            return $"Note with id {id} deleted successfully";
+            var res = _storage.DeleteNoteAsync(id);
+            if(res.Result)
+                return Ok();
+            return Conflict("Пользователь с таким UserId не найден");
         }
     }
 }

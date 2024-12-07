@@ -8,17 +8,19 @@ namespace SmartPlannerWebApi.StaticDataForTesting
     {
         public List<Note> Notes { get; set; } = new List<Note>();
 
-        public async Task AddNoteAsync(Note note)
+        public async Task<bool> AddNoteAsync(Note note)
         {
             Notes.Add(note);
+            return true;
         }
 
-        public async Task DeleteNoteAsync(Guid noteId)
+        public async Task<bool> DeleteNoteAsync(Guid noteId)
         {
             Notes.RemoveAll(n => n.Id == noteId);
+            return true;
         }
 
-        public async Task UpdateNoteAsync(Guid id, Note newNote)
+        public async Task<bool> UpdateNoteAsync(Guid id, Note newNote)
         {
             var lastNote = Notes.FirstOrDefault(n => n.Id == id);
             if (lastNote != null)
@@ -26,7 +28,9 @@ namespace SmartPlannerWebApi.StaticDataForTesting
                 lastNote.UpdatedDate = DateTime.Now;
                 lastNote.Description = newNote.Description;
                 lastNote.Title = newNote.Title;
+                return true;
             }
+            return false;
         }
 
         public async Task<Note> GetNoteByUserIdAsync(Guid userId)
