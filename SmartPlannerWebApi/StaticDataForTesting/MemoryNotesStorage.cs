@@ -5,7 +5,7 @@ namespace SmartPlannerWebApi.StaticDataForTesting
 {
     public class MemoryNotesStorage : INotesStorage
     {
-        public List<Note> Notes { get; set; }
+        public List<Note> Notes { get; set; } = new List<Note>();
 
         public async Task AddNoteAsync(Note note)
         {

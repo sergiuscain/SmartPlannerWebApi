@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartPlannerWebApi.DataBase;
+using SmartPlannerWebApi.Models;
+using SmartPlannerWebApi.StaticDataForTesting;
 
 namespace SmartPlannerWebApi.Controllers
 {
@@ -6,20 +9,23 @@ namespace SmartPlannerWebApi.Controllers
     [Route("api/[controller]")]   //Доступ к контроллеру осуществляется через https://localhost:7210/api/notes/
     public class NotesController : ControllerBase
     {
-        [HttpGet("test")]  //https://localhost:7210/api/notes/test
-        public string TestNotes()
+        private readonly INotesStorage _storage;
+
+        public NotesController(INotesStorage storage)
         {
-            return "Test Notes";
+            _storage = storage;
         }
-        [HttpGet("test2")]  //https://localhost:7210/api/notes/test2
-        public string TestNotes2()
+
+        [HttpGet("Create")] //https://localhost:7210/api/notes/Create?description=какой-то текст
+        public async Task<string> Create(string description)
         {
-            return "Nice Test^^";
+            _storage.AddNoteAsync(new Note { Description = description, UserId = TestData.UserId });
+            return $"Note created with description: {description}";
         }
-        [HttpGet("Hello")] //https://localhost:7210/api/notes/hello
-        public async Task<string> Hello(string x)
+        [HttpGet("GetById")] //https://localhost:7210/api/notes/GetById?id=123
+        public async Task<List<Note>> GetById(Guid id)
         {
-            return $"Hello {x}";
+            return await _storage.GetNotesByUserIdAsync(id);
         }
     }
 }
