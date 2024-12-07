@@ -1,4 +1,5 @@
-﻿using SmartPlannerWebApi.DataBase;
+﻿using System;
+using SmartPlannerWebApi.DataBase;
 using SmartPlannerWebApi.Models;
 
 namespace SmartPlannerWebApi.StaticDataForTesting
@@ -22,7 +23,9 @@ namespace SmartPlannerWebApi.StaticDataForTesting
             var lastNote = Notes.FirstOrDefault(n => n.Id == id);
             if (lastNote != null)
             {
-                lastNote = newNote;
+                lastNote.UpdatedDate = DateTime.Now;
+                lastNote.Description = newNote.Description;
+                lastNote.Title = newNote.Title;
             }
         }
 
