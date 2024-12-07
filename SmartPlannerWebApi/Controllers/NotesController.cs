@@ -16,11 +16,11 @@ namespace SmartPlannerWebApi.Controllers
             _storage = storage;
         }
 
-        [HttpGet("Create")] //https://localhost:7210/api/notes/Create?description=какой-то текст
-        public async Task<string> Create(string description)
+        [HttpPost("Create")] //https://localhost:7210/api/notes/Create?description=какой-то текст
+        public async Task<string> Create(Note note)
         {
-            _storage.AddNoteAsync(new Note { Description = description, UserId = TestData.UserId });
-            return $"Note created with description: {description}";
+            _storage.AddNoteAsync(note);
+            return $"Note created with description: {note.Description}";
         }
         [HttpGet("GetById")] //https://localhost:7210/api/notes/GetById?id=123
         public async Task<List<Note>> GetById(Guid id)
