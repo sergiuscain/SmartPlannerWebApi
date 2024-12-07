@@ -17,7 +17,7 @@ namespace SmartPlannerWebApi.Controllers
             return "Nice Test^^";
         }
         [HttpGet("Hello")] //https://localhost:7210/api/notes/hello
-        public string Hello(string x)
+        public async Task<string> Hello(string x)
         {
             return $"Hello {x}";
         }
