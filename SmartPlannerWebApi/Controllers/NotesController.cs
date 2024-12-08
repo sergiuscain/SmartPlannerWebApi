@@ -20,6 +20,7 @@ namespace SmartPlannerWebApi.Controllers
         [HttpPost("Create")] //https://localhost:7210/api/notes/Create
         public async Task<IActionResult> Create(Note note)
         {
+                    note.UserId = TestData.UserId;  //Временное решение
             var res = _storage.AddNoteAsync(note);
             if (res.Result)
                 return Created();
@@ -28,6 +29,7 @@ namespace SmartPlannerWebApi.Controllers
         [HttpGet("GetById")] //https://localhost:7210/api/notes/GetById?id=123
         public async  Task<ActionResult<List<Note>>> GetById(Guid id)
         {
+                                 id = TestData.UserId; //временное решение!!
             var notes =  _storage.GetNotesByUserIdAsync(id).Result;
             if (notes == null)
                 return NotFound("Такого пользователя не существует!");
