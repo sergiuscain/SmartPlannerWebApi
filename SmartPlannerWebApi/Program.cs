@@ -11,12 +11,19 @@ namespace SmartPlannerWebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<INotesStorage, MemoryNotesStorage>();
+
+            builder.Services.AddCors(opt =>
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .WithOrigins("https://localhost:7210");
+                })
+            );
 
             var app = builder.Build();
 
@@ -33,7 +40,7 @@ namespace SmartPlannerWebApi
 
 
             app.MapControllers();
-
+            app.UseCors("CorsPolicy");
             app.Run();
         }
     }

@@ -1,6 +1,0 @@
-@SmartPlannerWebApi_HostAddress = http://localhost:5000
-
-GET {{SmartPlannerWebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
