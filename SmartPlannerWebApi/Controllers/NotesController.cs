@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using System;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SmartPlannerWebApi.DataBase;
 using SmartPlannerWebApi.Models;
@@ -21,6 +22,9 @@ namespace SmartPlannerWebApi.Controllers
         public async Task<IActionResult> Create(Note note)
         {
                     note.UserId = TestData.UserId;  //Временное решение
+            note.Id = Guid.NewGuid();
+            note.CreatedDate = DateTime.Now;
+            note.UpdatedDate = DateTime.Now;
             var res = _storage.AddNoteAsync(note);
             if (res.Result)
                 return Created();
