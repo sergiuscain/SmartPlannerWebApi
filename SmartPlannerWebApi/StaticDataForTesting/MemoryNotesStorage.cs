@@ -9,7 +9,7 @@ namespace SmartPlannerWebApi.StaticDataForTesting
         public List<Note> Notes { get; set; } = new List<Note>();
         public MemoryNotesStorage()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Notes.Add(new Note
                 {

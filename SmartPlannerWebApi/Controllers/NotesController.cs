@@ -17,7 +17,7 @@ namespace SmartPlannerWebApi.Controllers
             _storage = storage;
         }
 
-        [HttpPost("Create")] //https://localhost:7210/api/notes/Create
+        [HttpPost()] //https://localhost:7210/api/notes/Create
         public async Task<IActionResult> Create(Note note)
         {
                     note.UserId = TestData.UserId;  //Временное решение
@@ -26,7 +26,7 @@ namespace SmartPlannerWebApi.Controllers
                 return Created();
             return Conflict();
         }
-        [HttpGet("GetById")] //https://localhost:7210/api/notes/GetById?id=123
+        [HttpGet()] //https://localhost:7210/api/notes/?id=123
         public async  Task<ActionResult<List<Note>>> GetById(Guid id)
         {
                                  id = TestData.UserId; //временное решение!!
@@ -37,20 +37,20 @@ namespace SmartPlannerWebApi.Controllers
 
         }
 
-        [HttpPut("Update")] //https://localhost:7210/api/notes/Update
+        [HttpPut()] //https://localhost:7210/api/notes
         public async Task<ActionResult<string>> Update(Guid id, Note updatedNote)
         {
             _storage.UpdateNoteAsync(id, updatedNote);
             return  Ok();
         }
 
-        [HttpDelete("Delete")] //https://localhost:7210/api/notes/Delete
+        [HttpDelete()] //https://localhost:7210/api/notes/Delete
         public async Task<ActionResult<string>> Delete(Guid id)
         {
             var res = _storage.DeleteNoteAsync(id);
             if(res.Result)
                 return Ok();
-            return Conflict("Пользователь с таким UserId не найден");
+            return Conflict("Заметка с таким Id не найдена");
         }
     }
 }

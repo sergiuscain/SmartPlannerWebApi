@@ -17,11 +17,11 @@ namespace SmartPlannerWebApi
             builder.Services.AddSingleton<INotesStorage, MemoryNotesStorage>();
 
             builder.Services.AddCors(opt =>
-                opt.AddPolicy("CorsPolicy", policy =>
+                opt.AddPolicy("AllowAllOrigins", policy =>
                 {
-                    policy.AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .WithOrigins("https://localhost:7210");
+                    policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
                 })
             );
 
@@ -40,7 +40,7 @@ namespace SmartPlannerWebApi
 
 
             app.MapControllers();
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowAllOrigins");
             app.Run();
         }
     }
