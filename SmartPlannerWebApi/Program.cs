@@ -17,7 +17,7 @@ namespace SmartPlannerWebApi
             builder.Services.AddSingleton<INotesStorage, MemoryNotesStorage>();
 
             builder.Services.AddCors(opt =>
-                opt.AddPolicy("AllowAllOrigins", policy =>
+                opt.AddPolicy("AllowAllOnly3000port", policy =>
                 {
                     policy.AllowAnyMethod()
                     .AllowAnyHeader()
@@ -40,7 +40,7 @@ namespace SmartPlannerWebApi
 
 
             app.MapControllers();
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowAllOnly3000port");
             app.Run();
         }
     }
