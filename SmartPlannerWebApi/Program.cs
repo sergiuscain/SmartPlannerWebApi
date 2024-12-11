@@ -19,9 +19,9 @@ namespace SmartPlannerWebApi
             builder.Services.AddCors(opt =>
                 opt.AddPolicy("AllowAllOrigins", policy =>
                 {
-                    policy.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    policy.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("http://localhost:3000");
                 })
             );
 
