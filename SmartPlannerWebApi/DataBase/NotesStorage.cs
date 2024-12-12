@@ -26,7 +26,7 @@ namespace SmartPlannerWebApi.DataBase
 
         public async Task<bool> DeleteNoteAsync(Guid noteId)
         {
-            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == noteId);
+            var note = await _context.Notes.FindAsync(noteId);
             if(note != null)
             {
                 _context.Notes.Remove(note);
@@ -39,7 +39,7 @@ namespace SmartPlannerWebApi.DataBase
 
         public async Task<Note> GetNoteByUserIdAsync(Guid userId)
         {
-            var note = await _context.Notes.FirstAsync(x => x.UserId == userId);
+            var note = await _context.Notes.FindAsync(userId);
             if(note != null)
                 return note;
             return null;
@@ -56,7 +56,7 @@ namespace SmartPlannerWebApi.DataBase
 
         public async Task<bool> UpdateNoteAsync(Guid Id, Note newNote)
         {
-            var lastNote = await _context.Notes.FirstOrDefaultAsync(n => n.Id == Id);
+            var lastNote = await _context.Notes.FindAsync(Id);
             if (lastNote != null)
             {
                 lastNote.UpdatedDate = DateTime.Now;
