@@ -10,7 +10,7 @@ namespace SmartPlannerWebApi.DataBase
 
         public MSSQLDBContext(DbContextOptions<MSSQLDBContext> options) : base(options) 
         {
-            
+            Database.Migrate();
         }
     }
 }

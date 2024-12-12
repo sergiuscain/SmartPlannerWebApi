@@ -1,4 +1,5 @@
 
+using Microsoft.EntityFrameworkCore;
 using SmartPlannerWebApi.DataBase;
 using SmartPlannerWebApi.StaticDataForTesting;
 
@@ -10,11 +11,15 @@ namespace SmartPlannerWebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<MSSQLDBContext>(options =>
+                            options.UseSqlServer(connection));
+            
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<INotesStorage, MemoryNotesStorage>();
+            builder.Services.AddTransient<INotesStorage, NotesStorage>();
 
             builder.Services.AddCors(opt =>
                 opt.AddPolicy("AllowAllOnly3000port", policy =>

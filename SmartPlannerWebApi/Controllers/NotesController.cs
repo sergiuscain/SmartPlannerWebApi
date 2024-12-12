@@ -25,8 +25,8 @@ namespace SmartPlannerWebApi.Controllers
             note.Id = Guid.NewGuid();
             note.CreatedDate = DateTime.Now;
             note.UpdatedDate = DateTime.Now;
-            var res = _storage.AddNoteAsync(note);
-            if (res.Result)
+            var res = await _storage.AddNoteAsync(note);
+            if (res)
                 return Created();
             return Conflict();
         }
@@ -34,7 +34,7 @@ namespace SmartPlannerWebApi.Controllers
         public async  Task<ActionResult<List<Note>>> GetById(Guid id)
         {
                                  id = TestData.UserId; //временное решение!!
-            var notes =  _storage.GetNotesByUserIdAsync(id).Result;
+            var notes = await  _storage.GetNotesByUserIdAsync(id);
             if (notes == null)
                 return NotFound("Такого пользователя не существует!");
             return Ok(notes);
@@ -44,15 +44,15 @@ namespace SmartPlannerWebApi.Controllers
         [HttpPut()] //https://localhost:7210/api/notes
         public async Task<ActionResult<string>> Update(Guid id, Note updatedNote)
         {
-            _storage.UpdateNoteAsync(id, updatedNote);
+            await _storage.UpdateNoteAsync(id, updatedNote);
             return  Ok();
         }
 
         [HttpDelete()] //https://localhost:7210/api/notes/Delete
         public async Task<ActionResult<string>> Delete(Guid id)
         {
-            var res = _storage.DeleteNoteAsync(id);
-            if(res.Result)
+            var res = await _storage.DeleteNoteAsync(id);
+            if(res)
                 return Ok();
             return Conflict("Заметка с таким Id не найдена");
         }
